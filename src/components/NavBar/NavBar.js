@@ -20,10 +20,11 @@ const NavBar = (props) => {
 
   return (
     <div>
-      <Navbar style={{ height: "80%"}} color="light" light expand="md">
-        <NavbarBrand href="/">
+      <Navbar style={{ height: "80%" }} color="light" light expand="md">
+        {/* <NavbarBrand href="/">
           <img src={logo} style={{ width: 75, height: 60 }} alt="Phazel" />
-        </NavbarBrand>
+        </NavbarBrand> */}
+        <NavbarBrand href="/about">phazel</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>

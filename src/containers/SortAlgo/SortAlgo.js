@@ -218,8 +218,8 @@ export default class SortAlgo extends React.Component {
                   randomIntFromInterval(0, 10000)
                 }
                 style={{
-                  height: `${value}px`,
-                  width: `${barWidth}px`,
+                  height: `${value / 14}rem`,
+                  width: `${barWidth / 14}rem`,
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",

@@ -14,13 +14,13 @@ $range-width: 100% !default;
 
 $range-handle-color: $blue !default;
 $range-handle-color-hover: $red !default;
-$range-handle-size: 16px !default;
+$range-handle-size: 1.143rem !default;
 
 $range-track-color: $grey !default;
-$range-track-height: 8px !default;
+$range-track-height: 0.571rem !default;
 
 $range-label-color: $blue !default;
-$range-label-width: 48px !default;
+$range-label-width: 3.429rem !default;
 
 .sortalgo-container {
   margin: 0;
@@ -28,8 +28,8 @@ $range-label-width: 48px !default;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
-  margin-top: 8px;
-  padding: 8px 0px;
+  margin-top: 0.571rem;
+  padding: 0.571rem 0px;
 
   .array-wrapper {
     position: absolute;
@@ -57,7 +57,7 @@ $range-label-width: 48px !default;
       justify-content: space-between;
     }
     .genNewArr {
-      padding-left: 80px;
+      padding-left: 5.714rem;
     }
     .options {
     }
@@ -89,7 +89,7 @@ $range-label-width: 48px !default;
         transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
         &:hover,
         &:focus {
-          box-shadow: 0 0 32px 32px $red inset;
+          box-shadow: 0 0 2.286rem 2.286rem $red inset;
           color: #fff;
           outline: 0;
         }
@@ -100,28 +100,28 @@ $range-label-width: 48px !default;
         color: $blue;
         transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
         &:hover {
-          box-shadow: 0 0 32px 32px $blue inset;
+          box-shadow: 0 0 2.286rem 2.286rem $blue inset;
         }
       }
 
       &__focus {
         &:focus {
-          box-shadow: 0 0 32px 32px $blue inset;
+          box-shadow: 0 0 2.286rem 2.286rem $blue inset;
           color: #fff;
           outline: 0;
         }
       }
 
       &__selected {
-        box-shadow: 0 0 32px 32px $blue inset;
+        box-shadow: 0 0 2.286rem 2.286rem $blue inset;
         color: #fff;
         outline: 0;
       }
     }
     .labelText {
-      font-size: 12.8px;
+      font-size: 0.914rem;
       font-weight: 700;
-      margin-right: 12.8px;
+      margin-right: 0.914rem;
     }
   }
 
@@ -130,7 +130,7 @@ $range-label-width: 48px !default;
 
     &__range {
       -webkit-appearance: none;
-      width: calc(100% - (#{$range-label-width + 10px}));
+      width: calc(100% - (#{$range-label-width + 0.714rem}));
       height: $range-track-height;
       border-radius: 5px;
       background: $range-track-color;
