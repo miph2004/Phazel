@@ -11,7 +11,7 @@ import {
 import { Link } from "react-router-dom";
 
 import logo from "../../images/logo.png";
-import "./NavBar.css";
+import "./NavBar.scss";
 
 const NavBar = (props) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -20,9 +20,9 @@ const NavBar = (props) => {
 
   return (
     <div>
-      <Navbar color="light" light expand="md">
+      <Navbar style={{ height: "80%"}} color="light" light expand="md">
         <NavbarBrand href="/">
-          <img src={logo} style={{ width: 125, height: 100 }} alt="Phazel" />
+          <img src={logo} style={{ width: 75, height: 60 }} alt="Phazel" />
         </NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>

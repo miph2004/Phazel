@@ -40,7 +40,7 @@ export default class SortAlgo extends React.Component {
   resetArray() {
     const arr = [];
     for (let i = 0; i < arrLengthDefault; i++) {
-      arr.push(randomIntFromInterval(15, 600));
+      arr.push(randomIntFromInterval(12, 480));
     }
 
     this.setState({
