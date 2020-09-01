@@ -6,6 +6,7 @@ import {
   NavbarBrand,
   Nav,
   NavItem,
+  NavbarText,
 } from "reactstrap";
 
 import { Link } from "react-router-dom";
@@ -24,7 +25,7 @@ const NavBar = (props) => {
         {/* <NavbarBrand href="/">
           <img src={logo} style={{ width: 75, height: 60 }} alt="Phazel" />
         </NavbarBrand> */}
-        <NavbarBrand href="/about">phazel</NavbarBrand>
+        <NavbarBrand href="/">phazel</NavbarBrand>
         <NavbarToggler onClick={toggle} />
         <Collapse isOpen={isOpen} navbar>
           <Nav className="mr-auto" navbar>
@@ -39,6 +40,7 @@ const NavBar = (props) => {
               </Link>
             </NavItem>
           </Nav>
+          <NavbarText>Create by Phat Tran</NavbarText>
         </Collapse>
       </Navbar>
     </div>
