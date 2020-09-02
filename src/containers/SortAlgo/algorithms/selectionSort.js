@@ -18,8 +18,6 @@ const selectionSort = (inputArr) => {
     inputArr.splice(0, 1);
     firstElemIdx++;
   }
-  console.log(animations);
-
   return animations;
 };
 export default selectionSort;

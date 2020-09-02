@@ -40,7 +40,7 @@ const NavBar = (props) => {
               </Link>
             </NavItem>
           </Nav>
-          <NavbarText>Create by Phat Tran</NavbarText>
+          <NavbarText>Created by Phat Tran</NavbarText>
         </Collapse>
       </Navbar>
     </div>

@@ -1,12 +1,19 @@
 import React from "react";
-import { randomIntFromInterval } from "../../helperFunction";
 import "./SortAlgo.scss";
-import bubleSort from "./algorithms/bubbleSort";
+
+import GenArrManually from "../../components/genArray/genArrManually";
+//Hepler function
+import { randomIntFromInterval } from "../../helperFunction";
+
+//Algorithms
+import bubbleSort from "./algorithms/bubbleSort";
 import selectionSort from "./algorithms/selectionSort";
 
-const PRIMARY_COLOR = "#3498db";
-const COMPARE_COLOR = "#e74c3c";
-const DONE_COLOR = "#2ecc71";
+//Visualizer
+import bubbleVisualize from "./visualizers/bubbleVisualize";
+import selectionVisualize from "./visualizers/selectionVisualize";
+import { PRIMARY_COLOR } from "./visualizers/sortingColor";
+
 const arrLengthDefault = 250;
 const animSpeedDefault = 3;
 
@@ -22,12 +29,13 @@ export default class SortAlgo extends React.Component {
     };
 
     this.resetArray = this.resetArray.bind(this);
+    this.handleGenArrManually = this.handleGenArrManually.bind(this);
     this.handleGenNewArr = this.handleGenNewArr.bind(this);
     this.handleGenNewSpeed = this.handleGenNewSpeed.bind(this);
     this.setSortAlgo = this.setSortAlgo.bind(this);
 
-    this.bubbleSort = this.bubbleSort.bind(this);
-    this.selectionSort = this.selectionSort.bind(this);
+    // this.bubbleSort = this.bubbleSort.bind(this);
+    // this.selectionSort = this.selectionSort.bind(this);
 
     this.runSort = this.runSort.bind(this);
     this.checkSortAlgo = this.checkSortAlgo.bind(this);
@@ -40,7 +48,7 @@ export default class SortAlgo extends React.Component {
   resetArray() {
     const arr = [];
     for (let i = 0; i < arrLengthDefault; i++) {
-      arr.push(randomIntFromInterval(12, 480));
+      arr.push(randomIntFromInterval(1, 100));
     }
 
     this.setState({
@@ -49,6 +57,28 @@ export default class SortAlgo extends React.Component {
   }
 
   //Generate new condition
+
+  handleGenArrManually(input) {
+    let userInput = input.trim();
+    let arr = userInput.split(",").map((item) => Number(item));
+    let checkValue = arr.findIndex((val) => val > 100 || val < 1);
+    let hasUnacceptChar = /\s|[a-z]/gi.test(userInput);
+
+    if (
+      hasUnacceptChar ||
+      checkValue !== -1 ||
+      arr.length < 5 ||
+      arr.length > 30
+    ) {
+      alert("Bạn đã tạo mảng không hợp lệ!!!");
+    } else {
+      this.setState({
+        array: arr,
+        arrLength: arr.length,
+      });
+    }
+  }
+
   handleGenNewArr(event) {
     this.setState({
       arrLength: Number(event.target.value),
@@ -67,110 +97,22 @@ export default class SortAlgo extends React.Component {
     });
   }
 
-  //Sorting algorithms
-  bubbleSort(array, animSpeed) {
-    const animations = bubleSort(array.slice());
-    console.log(animations);
-    const arrayBars = document.getElementsByClassName("array-bar");
-    for (let i = 0; i < animations.length; i++) {
-      if (!animations[i].hasOwnProperty("compare")) {
-        const [barOneIdx] = animations[i];
-        const barOneStyle = arrayBars[barOneIdx].style;
-
-        setTimeout(() => {
-          barOneStyle.backgroundColor = COMPARE_COLOR;
-          setTimeout(() => {
-            barOneStyle.backgroundColor = DONE_COLOR;
-          }, animSpeed);
-        }, i * animSpeed);
-      } else {
-        const [barOneIdx, barTwoIdx] = animations[i].compare;
-
-        const barOne = arrayBars[barOneIdx];
-        const barTwo = arrayBars[barTwoIdx];
-
-        const barOneStyle = barOne.style;
-        const barTwoStyle = barTwo.style;
-
-        setTimeout(() => {
-          barOneStyle.backgroundColor = COMPARE_COLOR;
-          barTwoStyle.backgroundColor = COMPARE_COLOR;
-          setTimeout(() => {
-            if (animations[i].hasOwnProperty("swap")) {
-              let temp = barOneStyle.height;
-              barOneStyle.height = barTwoStyle.height;
-              barTwoStyle.height = temp;
-
-              let tempValue = barOne.innerText;
-              barOne.innerText = barTwo.innerText;
-              barTwo.innerText = tempValue;
-            }
-            barOneStyle.backgroundColor = PRIMARY_COLOR;
-            barTwoStyle.backgroundColor = COMPARE_COLOR;
-          }, animSpeed);
-        }, i * animSpeed);
-      }
-    }
-  }
-
-  selectionSort(array, animSpeed) {
-    const animations = selectionSort(array.slice());
-    console.log(animations);
-    const arrayBars = document.getElementsByClassName("array-bar");
-    console.log(arrayBars);
-
-    for (let i = 0; i < animations.length; i++) {
-      if (animations[i].length === 1) {
-        const [barOneIdx] = animations[i];
-        const barOneStyle = arrayBars[barOneIdx].style;
-
-        setTimeout(() => {
-          barOneStyle.backgroundColor = COMPARE_COLOR;
-          setTimeout(() => {
-            barOneStyle.backgroundColor = DONE_COLOR;
-          }, animSpeed);
-        }, i * animSpeed);
-      } else {
-        const [barOneIdx, barTwoIdx] = animations[i];
-
-        const barOne = arrayBars[barOneIdx];
-        const barTwo = arrayBars[barTwoIdx];
-
-        const barOneStyle = barOne.style;
-        const barTwoStyle = barTwo.style;
-
-        setTimeout(() => {
-          barOneStyle.backgroundColor = COMPARE_COLOR;
-          barTwoStyle.backgroundColor = COMPARE_COLOR;
-          setTimeout(() => {
-            let tempHeight = barOneStyle.height;
-            barOneStyle.height = barTwoStyle.height;
-            barTwoStyle.height = tempHeight;
-
-            let tempValue = barOne.innerText;
-            barOne.innerText = barTwo.innerText;
-            barTwo.innerText = tempValue;
-
-            barOneStyle.backgroundColor = DONE_COLOR;
-            barTwoStyle.backgroundColor = PRIMARY_COLOR;
-          }, animSpeed);
-        }, i * animSpeed);
-      }
-    }
-  }
-
   //Run sorting function
-  runSort(array, animSpeed, sortAlgo) {
+  runSort(array, animSpeed, sortAlgo, arrayBars) {
+    console.log(array);
     if (sortAlgo === "") {
       alert("Bạn chưa chọn thuật toán");
     } else {
       switch (sortAlgo) {
         case "bubbleSort":
-          this.bubbleSort(array, animSpeed);
+          const bubbleAnimations = bubbleSort(array.slice());
+          bubbleVisualize(bubbleAnimations, animSpeed, arrayBars);
           break;
 
         case "selectionSort":
-          this.selectionSort(array, animSpeed);
+          const selectionAnimations = selectionSort(array.slice());
+          console.log(selectionAnimations);
+          selectionVisualize(selectionAnimations, animSpeed, arrayBars);
           break;
 
         default:
@@ -193,6 +135,8 @@ export default class SortAlgo extends React.Component {
 
   render() {
     const { array, arrLength, animSpeed, sortAlgo } = this.state;
+
+    const arrayBars = document.getElementsByClassName("array-bar");
 
     const arr = arrLength
       ? array.slice(0, arrLength)
@@ -218,7 +162,7 @@ export default class SortAlgo extends React.Component {
                   randomIntFromInterval(0, 10000)
                 }
                 style={{
-                  height: `${value / 14}rem`,
+                  height: `${(value * 4.5) / 14}rem`,
                   width: `${barWidth / 14}rem`,
                   display: "flex",
                   alignItems: "center",
@@ -232,52 +176,33 @@ export default class SortAlgo extends React.Component {
           })}
         </div>
         <div className="option-wrapper">
-          <div className="algorithms-button">
-            <label className="labelText">Choose Algorithm</label>
-            <button
-              className={
-                bubbleSortActive
-                  ? "btn btn__algoOptions btn__selected"
-                  : "btn btn__algoOptions"
-              }
-              value="bubbleSort"
-              onClick={this.setSortAlgo}
-            >
-              Bubble Sort
-            </button>
-            <button
-              className={
-                selectionSortActive
-                  ? "btn btn__algoOptions btn__selected"
-                  : "btn btn__algoOptions"
-              }
-              value="selectionSort"
-              onClick={this.setSortAlgo}
-            >
-              Selection Sort
-            </button>
-          </div>
-
-          <div className="main-button">
-            <button
-              className="btn btn__algoOptions btn__focus"
-              onClick={this.resetArray}
-            >
-              Generate New Array
-            </button>
-            <button
-              className="btn btn__sort"
-              onClick={() => this.runSort(arr, animationSpeed, sortAlgo)}
-            >
-              SORT!!!
-            </button>
-
-            {/* <button className="sortButton" onClick={this.checkSortAlgo}>
-              CHECK SORT!!!
-            </button> */}
-          </div>
           <div className="options">
-            <div className="range-slider">
+            <div className="algoButtons">
+              <label className="labelText">Choose Algorithm</label>
+              <button
+                className={
+                  bubbleSortActive
+                    ? "btn btn__algoOptions btn__selected"
+                    : "btn btn__algoOptions"
+                }
+                value="bubbleSort"
+                onClick={this.setSortAlgo}
+              >
+                Bubble Sort
+              </button>
+              <button
+                className={
+                  selectionSortActive
+                    ? "btn btn__algoOptions btn__selected"
+                    : "btn btn__algoOptions"
+                }
+                value="selectionSort"
+                onClick={this.setSortAlgo}
+              >
+                Selection Sort
+              </button>
+            </div>
+            <div className="range-slider range-speed">
               <label className="labelText">Choose Speed</label>
               <input
                 type="range"
@@ -291,7 +216,7 @@ export default class SortAlgo extends React.Component {
               />
               <span className="range-slider__value">{animationSpeed}ms</span>
             </div>
-            <div className="range-slider">
+            <div className="range-slider range-arrSize">
               <label className="labelText">Choose Array Size</label>
               <input
                 type="range"
@@ -305,6 +230,36 @@ export default class SortAlgo extends React.Component {
               />
               <span className="range-slider__value">{arrLength}</span>
             </div>
+          </div>
+
+          <div className="main-button">
+            <div className="genNewArr">
+              <button
+                className="btn btn__genArrOptions btn__focus btn__medium"
+                onClick={this.resetArray}
+              >
+                Generate Array Automatic
+              </button>
+
+              <GenArrManually
+                btnLabel="Generate Array Manually"
+                btnClass="btn btn__genArrOptions btn__focus btn__medium"
+                submitInput={this.handleGenArrManually}
+              />
+            </div>
+
+            <button
+              className="btn btn__sort btn__large"
+              onClick={() =>
+                this.runSort(arr, animationSpeed, sortAlgo, arrayBars)
+              }
+            >
+              SORT!!!
+            </button>
+
+            {/* <button className="sortButton" onClick={this.checkSortAlgo}>
+              CHECK SORT!!!
+            </button> */}
           </div>
         </div>
       </div>

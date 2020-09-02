@@ -51,16 +51,111 @@ $range-label-width: 3.429rem !default;
     flex-direction: row;
     justify-content: space-between;
 
-    .main-button {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-    .genNewArr {
-      padding-left: 5.714rem;
-    }
     .options {
+      margin-left: 10px;
+
+      .algoButtons {
+      }
+
+      .range-slider {
+        width: $range-width;
+
+        &__range {
+          -webkit-appearance: none;
+          width: calc(100% - (#{$range-label-width + 0.714rem}));
+          height: $range-track-height;
+          border-radius: 5px;
+          background: $range-track-color;
+          outline: none;
+          padding: 0;
+          margin: 0;
+
+          // Range Handle
+          &::-webkit-slider-thumb {
+            appearance: none;
+            width: $range-handle-size;
+            height: $range-handle-size;
+            border-radius: 50%;
+            background: $range-handle-color;
+            cursor: pointer;
+            transition: background 0.15s ease-in-out;
+
+            &:hover {
+              background: $range-handle-color-hover;
+            }
+          }
+
+          &:active::-webkit-slider-thumb {
+            background: $range-handle-color-hover;
+          }
+
+          &::-moz-range-thumb {
+            width: $range-handle-size;
+            height: $range-handle-size;
+            border: 0;
+            border-radius: 50%;
+            background: $range-handle-color;
+            cursor: pointer;
+            transition: background 0.15s ease-in-out;
+
+            &:hover {
+              background: $range-handle-color-hover;
+            }
+          }
+
+          &:active::-moz-range-thumb {
+            background: $range-handle-color-hover;
+          }
+
+          // Focus state
+          &:focus {
+            &::-webkit-slider-thumb {
+              box-shadow: 0 0 0 3px #fff, 0 0 0 6px $red;
+            }
+          }
+        }
+
+        &__value {
+          display: inline-block;
+          position: relative;
+          width: $range-label-width;
+          color: $white;
+          line-height: 16px;
+          text-align: center;
+          border-radius: 3px;
+          background: $range-label-color;
+          padding: 5px 0px;
+          margin-left: 8px;
+
+          &:after {
+            position: absolute;
+            top: 8px;
+            left: -7px;
+            width: 0;
+            height: 0;
+            border-top: 7px solid transparent;
+            border-right: 7px solid $range-label-color;
+            border-bottom: 7px solid transparent;
+            content: "";
+          }
+        }
+      }
     }
+
+    .main-button {
+      position: absolute;
+      right: 0;
+      display: flex;
+      flex-direction: row;
+
+      .genNewArr {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+    }
+
+    //Global
     .btn {
       box-sizing: border-box;
       appearance: none;
@@ -85,7 +180,18 @@ $range-label-width: 3.429rem !default;
         outline: 0;
       }
 
+      &__medium {
+        padding: 0.7rem;
+        font-size: 0.9rem;
+      }
+
+      &__large {
+        padding: 1.8rem;
+        font-size: 1.8rem;
+      }
+
       &__sort {
+        margin: 0px 10px 0px 5px;
         transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
         &:hover,
         &:focus {
@@ -95,8 +201,19 @@ $range-label-width: 3.429rem !default;
         }
       }
 
+      &__genArrOptions {
+        border-color: $blue;
+        margin: 5px 5px 5px 0px;
+        color: $blue;
+        transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
+        &:hover {
+          box-shadow: 0 0 2.286rem 2.286rem $blue inset;
+        }
+      }
+
       &__algoOptions {
         border-color: $blue;
+        margin-right: 5px;
         color: $blue;
         transition: box-shadow 300ms ease-in-out, color 300ms ease-in-out;
         &:hover {
@@ -118,94 +235,11 @@ $range-label-width: 3.429rem !default;
         outline: 0;
       }
     }
+
     .labelText {
       font-size: 0.914rem;
       font-weight: 700;
       margin-right: 0.914rem;
-    }
-  }
-
-  .range-slider {
-    width: $range-width;
-
-    &__range {
-      -webkit-appearance: none;
-      width: calc(100% - (#{$range-label-width + 0.714rem}));
-      height: $range-track-height;
-      border-radius: 5px;
-      background: $range-track-color;
-      outline: none;
-      padding: 0;
-      margin: 0;
-
-      // Range Handle
-      &::-webkit-slider-thumb {
-        appearance: none;
-        width: $range-handle-size;
-        height: $range-handle-size;
-        border-radius: 50%;
-        background: $range-handle-color;
-        cursor: pointer;
-        transition: background 0.15s ease-in-out;
-
-        &:hover {
-          background: $range-handle-color-hover;
-        }
-      }
-
-      &:active::-webkit-slider-thumb {
-        background: $range-handle-color-hover;
-      }
-
-      &::-moz-range-thumb {
-        width: $range-handle-size;
-        height: $range-handle-size;
-        border: 0;
-        border-radius: 50%;
-        background: $range-handle-color;
-        cursor: pointer;
-        transition: background 0.15s ease-in-out;
-
-        &:hover {
-          background: $range-handle-color-hover;
-        }
-      }
-
-      &:active::-moz-range-thumb {
-        background: $range-handle-color-hover;
-      }
-
-      // Focus state
-      &:focus {
-        &::-webkit-slider-thumb {
-          box-shadow: 0 0 0 3px #fff, 0 0 0 6px $red;
-        }
-      }
-    }
-
-    &__value {
-      display: inline-block;
-      position: relative;
-      width: $range-label-width;
-      color: $white;
-      line-height: 16px;
-      text-align: center;
-      border-radius: 3px;
-      background: $range-label-color;
-      padding: 5px 10px;
-      margin-left: 8px;
-
-      &:after {
-        position: absolute;
-        top: 8px;
-        left: -7px;
-        width: 0;
-        height: 0;
-        border-top: 7px solid transparent;
-        border-right: 7px solid $range-label-color;
-        border-bottom: 7px solid transparent;
-        content: "";
-      }
     }
   }
 }

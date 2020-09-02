@@ -1,4 +1,4 @@
-const bubleSort = (inputArr) => {
+const bubbleSort = (inputArr) => {
   let animations = [];
   let swapped;
   let whenDoneLength = 0;
@@ -26,4 +26,4 @@ const bubleSort = (inputArr) => {
   }
   return animations;
 };
-export default bubleSort;
+export default bubbleSort;
