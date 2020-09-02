@@ -1,17 +1,19 @@
 import React from "react";
 import "./SortAlgo.scss";
 
-import GenArrManually from "../../components/genArray/genArrManually";
+import GenArrManually from "../../components/GenArrayButtons/GenArrManually";
 //Hepler function
 import { randomIntFromInterval } from "../../helperFunction";
 
 //Algorithms
 import bubbleSort from "./algorithms/bubbleSort";
 import selectionSort from "./algorithms/selectionSort";
+import insertionSort from "./algorithms/insertionSort";
 
 //Visualizer
 import bubbleVisualize from "./visualizers/bubbleVisualize";
 import selectionVisualize from "./visualizers/selectionVisualize";
+import insertionVisualize from "./visualizers/insertionVisualize";
 import { PRIMARY_COLOR } from "./visualizers/sortingColor";
 
 const arrLengthDefault = 250;
@@ -99,7 +101,6 @@ export default class SortAlgo extends React.Component {
 
   //Run sorting function
   runSort(array, animSpeed, sortAlgo, arrayBars) {
-    console.log(array);
     if (sortAlgo === "") {
       alert("Bạn chưa chọn thuật toán");
     } else {
@@ -111,8 +112,12 @@ export default class SortAlgo extends React.Component {
 
         case "selectionSort":
           const selectionAnimations = selectionSort(array.slice());
-          console.log(selectionAnimations);
           selectionVisualize(selectionAnimations, animSpeed, arrayBars);
+          break;
+
+        case "insertionSort":
+          const insertionSortAnimations = insertionSort(array.slice());
+          insertionVisualize(insertionSortAnimations, animSpeed, arrayBars);
           break;
 
         default:
@@ -147,6 +152,7 @@ export default class SortAlgo extends React.Component {
 
     const bubbleSortActive = sortAlgo === "bubbleSort";
     const selectionSortActive = sortAlgo === "selectionSort";
+    const insertionSortActive = sortAlgo === "insertionSort";
 
     const barWidth = 750 / arrLength;
     return (
@@ -170,7 +176,7 @@ export default class SortAlgo extends React.Component {
                   backgroundColor: PRIMARY_COLOR,
                 }}
               >
-                {arrLength < 30 ? <span>{value}</span> : ""}
+                {arrLength <= 30 ? <span>{value}</span> : ""}
               </div>
             );
           })}
@@ -200,6 +206,17 @@ export default class SortAlgo extends React.Component {
                 onClick={this.setSortAlgo}
               >
                 Selection Sort
+              </button>
+              <button
+                className={
+                  insertionSortActive
+                    ? "btn btn__algoOptions btn__selected"
+                    : "btn btn__algoOptions"
+                }
+                value="insertionSort"
+                onClick={this.setSortAlgo}
+              >
+                Insertion Sort
               </button>
             </div>
             <div className="range-slider range-speed">
@@ -231,7 +248,6 @@ export default class SortAlgo extends React.Component {
               <span className="range-slider__value">{arrLength}</span>
             </div>
           </div>
-
           <div className="main-button">
             <div className="genNewArr">
               <button
