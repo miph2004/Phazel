@@ -9,11 +9,13 @@ import { randomIntFromInterval } from "../../helperFunction";
 import bubbleSort from "./algorithms/bubbleSort";
 import selectionSort from "./algorithms/selectionSort";
 import insertionSort from "./algorithms/insertionSort";
+import mergeSort from "./algorithms/mergeSort";
 
 //Visualizer
 import bubbleVisualize from "./visualizers/bubbleVisualize";
 import selectionVisualize from "./visualizers/selectionVisualize";
 import insertionVisualize from "./visualizers/insertionVisualize";
+import mergeVisualize from "./visualizers/mergeVisualize";
 import { PRIMARY_COLOR } from "./visualizers/sortingColor";
 
 const arrLengthDefault = 250;
@@ -35,9 +37,6 @@ export default class SortAlgo extends React.Component {
     this.handleGenNewArr = this.handleGenNewArr.bind(this);
     this.handleGenNewSpeed = this.handleGenNewSpeed.bind(this);
     this.setSortAlgo = this.setSortAlgo.bind(this);
-
-    // this.bubbleSort = this.bubbleSort.bind(this);
-    // this.selectionSort = this.selectionSort.bind(this);
 
     this.runSort = this.runSort.bind(this);
     this.checkSortAlgo = this.checkSortAlgo.bind(this);
@@ -120,8 +119,14 @@ export default class SortAlgo extends React.Component {
           insertionVisualize(insertionSortAnimations, animSpeed, arrayBars);
           break;
 
+        case "mergeSort":
+          const mergeSortAnimations = mergeSort(array.slice());
+          console.log(mergeSortAnimations);
+          mergeVisualize(mergeSortAnimations, animSpeed, arrayBars);
+          break;
+
         default:
-          alert("Error");
+          alert("Not implement yet");
           break;
       }
     }
@@ -147,12 +152,14 @@ export default class SortAlgo extends React.Component {
       ? array.slice(0, arrLength)
       : array.slice(0, arrLengthDefault);
 
-    const animationSpeed =
-      animSpeed > 0 ? animSpeed * 10 : Math.abs(animSpeed) * 10;
+    const animationSpeed = animSpeed > 0 ? animSpeed : Math.abs(animSpeed);
 
     const bubbleSortActive = sortAlgo === "bubbleSort";
     const selectionSortActive = sortAlgo === "selectionSort";
     const insertionSortActive = sortAlgo === "insertionSort";
+    const mergeSortActive = sortAlgo === "mergeSort";
+    const heapSortActive = sortAlgo === "heapSort";
+    const quickSortActive = sortAlgo === "quickSort";
 
     const barWidth = 750 / arrLength;
     return (
@@ -218,6 +225,39 @@ export default class SortAlgo extends React.Component {
               >
                 Insertion Sort
               </button>
+              <button
+                className={
+                  mergeSortActive
+                    ? "btn btn__algoOptions btn__selected"
+                    : "btn btn__algoOptions"
+                }
+                value="mergeSort"
+                onClick={this.setSortAlgo}
+              >
+                Merge Sort
+              </button>
+              <button
+                className={
+                  heapSortActive
+                    ? "btn btn__algoOptions btn__selected"
+                    : "btn btn__algoOptions"
+                }
+                value="heapSort"
+                onClick={this.setSortAlgo}
+              >
+                Heap Sort
+              </button>
+              <button
+                className={
+                  quickSortActive
+                    ? "btn btn__algoOptions btn__selected"
+                    : "btn btn__algoOptions"
+                }
+                value="quickSort"
+                onClick={this.setSortAlgo}
+              >
+                Quick Sort
+              </button>
             </div>
             <div className="range-slider range-speed">
               <label className="labelText">Choose Speed</label>
@@ -225,8 +265,8 @@ export default class SortAlgo extends React.Component {
                 type="range"
                 className="range-slider__range"
                 onChange={this.handleGenNewSpeed}
-                min={-200}
-                max={1}
+                min={-1000}
+                max={3}
                 value={animSpeed}
                 step={1}
                 style={{ width: 500 }}
