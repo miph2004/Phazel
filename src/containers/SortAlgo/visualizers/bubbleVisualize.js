@@ -34,8 +34,10 @@ const bubbleVisualize = (animations, animSpeed, arrayBars) => {
             barOne.innerText = barTwo.innerText;
             barTwo.innerText = tempValue;
           }
-          barOneStyle.backgroundColor = PRIMARY_COLOR;
-          barTwoStyle.backgroundColor = COMPARE_COLOR;
+          setTimeout(() => {
+            barOneStyle.backgroundColor = PRIMARY_COLOR;
+            barTwoStyle.backgroundColor = PRIMARY_COLOR;
+          }, animSpeed);
         }, animSpeed);
       }, i * animSpeed);
     }
