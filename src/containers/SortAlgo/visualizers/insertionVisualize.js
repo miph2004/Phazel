@@ -13,7 +13,7 @@ const insertionVisualize = (animations, animSpeed, arrayBars) => {
         }, animSpeed);
       }, i * animSpeed);
     } else {
-      const [insertIdx, replaceIdx] = animations[i];
+      const [insertIdx, replaceIdx, stateCheck] = animations[i];
 
       const insertBar = arrayBars[insertIdx];
       const replaceBar = arrayBars[replaceIdx];
@@ -21,10 +21,15 @@ const insertionVisualize = (animations, animSpeed, arrayBars) => {
       const insertBarStyle = insertBar.style;
       const replaceBarStyle = replaceBar.style;
 
-      setTimeout(() => {
-        insertBarStyle.backgroundColor = COMPARE_COLOR;
-        replaceBarStyle.backgroundColor = COMPARE_COLOR;
+      if (stateCheck === "select") {
         setTimeout(() => {
+          insertBarStyle.backgroundColor = COMPARE_COLOR;
+          replaceBarStyle.backgroundColor = COMPARE_COLOR;
+        }, i * animSpeed);
+      }
+      if (stateCheck === "swap") {
+        setTimeout(() => {
+          //Đẩy các cột lên trên để insert phần tử khác vào
           for (let i = insertIdx; i > replaceIdx; i--) {
             const barOne = arrayBars[i];
             const barTwo = arrayBars[i - 1];
@@ -40,10 +45,12 @@ const insertionVisualize = (animations, animSpeed, arrayBars) => {
             barOne.innerText = barTwo.innerText;
             barTwo.innerText = tempValue;
           }
-          replaceBarStyle.backgroundColor = DONE_COLOR;
-          insertBarStyle.backgroundColor = DONE_COLOR;
-        }, animSpeed);
-      }, i * animSpeed);
+          setTimeout(() => {
+            replaceBarStyle.backgroundColor = DONE_COLOR;
+            insertBarStyle.backgroundColor = DONE_COLOR;
+          }, animSpeed);
+        }, i * animSpeed);
+      }
     }
   }
 };

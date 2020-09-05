@@ -13,7 +13,7 @@ const selectionVisualize = (animations, animSpeed, arrayBars) => {
         }, animSpeed);
       }, i * animSpeed);
     } else {
-      const [barOneIdx, barTwoIdx] = animations[i];
+      const [barOneIdx, barTwoIdx, stateCheck] = animations[i];
 
       const barOne = arrayBars[barOneIdx];
       const barTwo = arrayBars[barTwoIdx];
@@ -21,9 +21,13 @@ const selectionVisualize = (animations, animSpeed, arrayBars) => {
       const barOneStyle = barOne.style;
       const barTwoStyle = barTwo.style;
 
-      setTimeout(() => {
-        barOneStyle.backgroundColor = COMPARE_COLOR;
-        barTwoStyle.backgroundColor = COMPARE_COLOR;
+      if (stateCheck === "select") {
+        setTimeout(() => {
+          barOneStyle.backgroundColor = COMPARE_COLOR;
+          barTwoStyle.backgroundColor = COMPARE_COLOR;
+        }, i * animSpeed);
+      }
+      if (stateCheck === "swap") {
         setTimeout(() => {
           let tempHeight = barOneStyle.height;
           barOneStyle.height = barTwoStyle.height;
@@ -33,10 +37,12 @@ const selectionVisualize = (animations, animSpeed, arrayBars) => {
           barOne.innerText = barTwo.innerText;
           barTwo.innerText = tempValue;
 
-          barOneStyle.backgroundColor = DONE_COLOR;
-          barTwoStyle.backgroundColor = PRIMARY_COLOR;
-        }, animSpeed);
-      }, i * animSpeed);
+          setTimeout(() => {
+            barOneStyle.backgroundColor = DONE_COLOR;
+            barTwoStyle.backgroundColor = PRIMARY_COLOR;
+          }, animSpeed);
+        }, i * animSpeed);
+      }
     }
   }
 };

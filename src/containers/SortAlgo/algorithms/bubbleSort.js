@@ -1,3 +1,5 @@
+import { swap } from "../../../helperFunction";
+
 const bubbleSort = (inputArr) => {
   let animations = [];
   let swapped;
@@ -10,9 +12,7 @@ const bubbleSort = (inputArr) => {
       anim.compare = [i, i + 1];
       if (inputArr[i] > inputArr[i + 1]) {
         anim.swap = [i, i + 1];
-        let tmp = inputArr[i];
-        inputArr[i] = inputArr[i + 1];
-        inputArr[i + 1] = tmp;
+        swap(inputArr, i, i + 1);
         swapped = true;
       }
       animations.push(anim);

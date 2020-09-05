@@ -11,6 +11,7 @@ import selectionSort from "./algorithms/selectionSort";
 import insertionSort from "./algorithms/insertionSort";
 import mergeSort from "./algorithms/mergeSort";
 import heapSort from "./algorithms/heapSort";
+import quickSort from "./algorithms/quickSort";
 
 //Visualizer
 import bubbleVisualize from "./visualizers/bubbleVisualize";
@@ -18,6 +19,7 @@ import selectionVisualize from "./visualizers/selectionVisualize";
 import insertionVisualize from "./visualizers/insertionVisualize";
 import mergeVisualize from "./visualizers/mergeVisualize";
 import heapVisualize from "./visualizers/heapVisualize";
+import quickVisualize from "./visualizers/quickVisualize";
 import { PRIMARY_COLOR } from "./visualizers/sortingColor";
 
 const arrLengthDefault = 250;
@@ -108,6 +110,7 @@ export default class SortAlgo extends React.Component {
       switch (sortAlgo) {
         case "bubbleSort":
           const bubbleAnimations = bubbleSort(array.slice());
+          console.log(bubbleAnimations);
           bubbleVisualize(bubbleAnimations, animSpeed, arrayBars);
           break;
 
@@ -129,6 +132,11 @@ export default class SortAlgo extends React.Component {
         case "heapSort":
           const heapSortAnimations = heapSort(array.slice());
           heapVisualize(heapSortAnimations, animSpeed, arrayBars);
+          break;
+
+        case "quickSort":
+          const quickSortAnimations = quickSort(array.slice());
+          quickVisualize(quickSortAnimations, animSpeed, arrayBars);
           break;
 
         default:

@@ -1,14 +1,9 @@
-import {
-  PRIMARY_COLOR,
-  COMPARE_COLOR,
-  SWAP_COLOR,
-  DONE_COLOR,
-} from "./sortingColor";
+import { PRIMARY_COLOR, COMPARE_COLOR, DONE_COLOR } from "./sortingColor";
 
 const heapVisualize = (animations, animSpeed, arrayBars) => {
   for (let i = 0; i < animations.length; i++) {
-    if (animations[i].length === 1) {
-      const [barOneIdx] = animations[i];
+    if (animations[i].length === 2) {
+      const [barOneIdx, stateCheck] = animations[i];
 
       const barOne = arrayBars[barOneIdx];
       const barTwo = arrayBars[0];
@@ -17,9 +12,14 @@ const heapVisualize = (animations, animSpeed, arrayBars) => {
       const barTwoStyle = barTwo.style;
 
       if (barOneIdx !== 0) {
-        setTimeout(() => {
-          barOneStyle.backgroundColor = COMPARE_COLOR;
-          barTwoStyle.backgroundColor = COMPARE_COLOR;
+        if (stateCheck === "select") {
+          setTimeout(() => {
+            barOneStyle.backgroundColor = COMPARE_COLOR;
+            barTwoStyle.backgroundColor = COMPARE_COLOR;
+          }, i * animSpeed);
+        }
+
+        if (stateCheck === "swap") {
           setTimeout(() => {
             let temp = barOneStyle.height;
             barOneStyle.height = barTwoStyle.height;
@@ -28,18 +28,18 @@ const heapVisualize = (animations, animSpeed, arrayBars) => {
             let tempValue = barOne.innerText;
             barOne.innerText = barTwo.innerText;
             barTwo.innerText = tempValue;
-
-            barOneStyle.backgroundColor = DONE_COLOR;
-            barTwoStyle.backgroundColor = PRIMARY_COLOR;
-          }, animSpeed);
-        }, i * animSpeed);
+            setTimeout(() => {
+              barOneStyle.backgroundColor = DONE_COLOR;
+            }, animSpeed);
+          }, i * animSpeed);
+        }
       } else {
         setTimeout(() => {
           barOneStyle.backgroundColor = DONE_COLOR;
         }, i * animSpeed);
       }
     } else {
-      const [barOneIdx, barTwoIdx] = animations[i];
+      const [barOneIdx, barTwoIdx, stateCheck] = animations[i];
 
       const barOne = arrayBars[barOneIdx];
       const barTwo = arrayBars[barTwoIdx];
@@ -47,22 +47,28 @@ const heapVisualize = (animations, animSpeed, arrayBars) => {
       const barOneStyle = barOne.style;
       const barTwoStyle = barTwo.style;
 
-      setTimeout(() => {
-        barOneStyle.backgroundColor = COMPARE_COLOR;
-        barTwoStyle.backgroundColor = COMPARE_COLOR;
+      if (stateCheck === "select") {
         setTimeout(() => {
-          let temp = barOneStyle.height;
+          barOneStyle.backgroundColor = COMPARE_COLOR;
+          barTwoStyle.backgroundColor = COMPARE_COLOR;
+        }, i * animSpeed);
+      }
+      if (stateCheck === "swap") {
+        setTimeout(() => {
+          let tempHeight = barOneStyle.height;
           barOneStyle.height = barTwoStyle.height;
-          barTwoStyle.height = temp;
+          barTwoStyle.height = tempHeight;
 
           let tempValue = barOne.innerText;
           barOne.innerText = barTwo.innerText;
           barTwo.innerText = tempValue;
 
-          barOneStyle.backgroundColor = PRIMARY_COLOR;
-          barTwoStyle.backgroundColor = PRIMARY_COLOR;
-        }, animSpeed);
-      }, i * animSpeed);
+          setTimeout(() => {
+            barOneStyle.backgroundColor = PRIMARY_COLOR;
+            barTwoStyle.backgroundColor = PRIMARY_COLOR;
+          }, animSpeed);
+        }, i * animSpeed);
+      }
     }
   }
 };

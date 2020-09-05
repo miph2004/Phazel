@@ -1,9 +1,6 @@
+import { swap } from "../../../helperFunction";
+
 var arrLength;
-function swap(input, indexA, indexB) {
-  const temp = input[indexA];
-  input[indexA] = input[indexB];
-  input[indexB] = temp;
-}
 const maxHeap = (inputArr, i, animations) => {
   const left = 2 * i + 1;
   const right = 2 * i + 2;
@@ -19,7 +16,8 @@ const maxHeap = (inputArr, i, animations) => {
 
   if (max !== i) {
     swap(inputArr, i, max);
-    animations.push([i, max]);
+    animations.push([i, max, "select"]);
+    animations.push([i, max, "swap"]);
     maxHeap(inputArr, max, animations);
   }
 };
@@ -35,13 +33,15 @@ const heapSort = (inputArr) => {
 
   for (let i = inputArr.length - 1; i > 0; i--) {
     swap(inputArr, 0, i);
-    animations.push([i]);
+    animations.push([i, "select"]);
+    animations.push([i, "swap"]);
     arrLength--;
 
     maxHeap(inputArr, 0, animations);
   }
 
-  animations.push([0]);
+  animations.push([0, "select"]);
+  animations.push([0, "swap"]);
   return animations;
 };
 export default heapSort;

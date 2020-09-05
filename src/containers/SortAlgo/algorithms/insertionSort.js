@@ -12,7 +12,8 @@ const insertionSort = (inputArr) => {
     if (replaceIdx !== -1) {
       let insertItem = arr.splice(i, 1);
       arr.splice(replaceIdx, 0, ...insertItem);
-      animations.push([i, replaceIdx]);
+      animations.push([i, replaceIdx, "select"]);
+      animations.push([i, replaceIdx, "swap"]);
     } else {
       animations.push([i]);
     }

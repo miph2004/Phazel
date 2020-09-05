@@ -1,3 +1,5 @@
+import { swap } from "../../../helperFunction";
+
 const selectionSort = (inputArr) => {
   let animations = [];
   let firstElemIdx = 0;
@@ -7,10 +9,9 @@ const selectionSort = (inputArr) => {
     let minIdx = inputArr.indexOf(min);
 
     if (minIdx !== 0) {
-      let temp = inputArr[0];
-      inputArr[0] = inputArr[minIdx];
-      inputArr[minIdx] = temp;
-      animations.push([firstElemIdx, minIdx + firstElemIdx]);
+      swap(inputArr, 0, minIdx);
+      animations.push([firstElemIdx, minIdx + firstElemIdx, "select"]);
+      animations.push([firstElemIdx, minIdx + firstElemIdx, "swap"]);
     } else {
       animations.push([firstElemIdx]);
     }
