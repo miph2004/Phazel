@@ -1,0 +1,23 @@
+//Colours
+$green: #2ecc71;
+$red: #e74c3c;
+$blue: #3498db;
+$yellow: #f1c40f;
+$purple: #8e44ad;
+$turquoise: #1abc9c;
+$grey: #d7dcdf;
+$white: #fff;
+$black: #000;
+
+.node {
+  width: 25px;
+  height: 25px;
+  display: inline-block;
+  border: 1px solid $blue;
+}
+.start-node {
+  background-color: $red;
+}
+.finish-node {
+  background-color: $green;
+}

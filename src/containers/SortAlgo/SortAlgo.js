@@ -110,7 +110,6 @@ export default class SortAlgo extends React.Component {
       switch (sortAlgo) {
         case "bubbleSort":
           const bubbleAnimations = bubbleSort(array.slice());
-          console.log(bubbleAnimations);
           bubbleVisualize(bubbleAnimations, animSpeed, arrayBars);
           break;
 
